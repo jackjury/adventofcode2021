@@ -5,8 +5,7 @@ const inputTxt = "/Users/jackjury/code/aoc21/05/1/input.txt";
 async function importTxt(file) {
   try {
     const data = await fs.readFile(file, "utf8");
-    return data.split("\n");
-    return data;
+    return data.split(",");
   } catch (error) {
     console.log(error);
     return null;
@@ -14,7 +13,7 @@ async function importTxt(file) {
 }
 
 async function run() {
-  let data = await await importTxt(testTxt);
+  let data = await await importTxt(inputTxt);
   let instructions = data.map((input) => {
     let instruction = input.split(" -> ");
     let start = instruction[0].split(",").map((num) => parseInt(num));
@@ -47,12 +46,18 @@ async function run() {
   // let b = unique.size;
   // let answer = a - b;
   // console.log(answer);
-  let set = new Set();
-  let crosses = 0;
+  let crosses = new Set();
+  let unique = new Set();
   occupied.forEach((point) => {
-    if (crosses.has(point)) {
+    if (unique.has(point)) {
+      crosses.add(point);
+    } else {
+      unique.add(point);
     }
   });
+
+  console.log(crosses.size);
+
   // for (let index = 0; index < occupied.length; index++) {
   //   let comparison = occupied.shift();
   //   occupied.forEach((element) => {
